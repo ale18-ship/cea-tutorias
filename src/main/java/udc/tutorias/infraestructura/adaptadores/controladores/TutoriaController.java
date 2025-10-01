@@ -18,7 +18,7 @@ public class TutoriaController {
         return servicioProgramar.programarTutoria(tutoria);
     }
 
-    public void cancelarTutoria(Long id) {
+    public void cancelarTutoria(String id) {
         servicioCancelar.cancelarTutoria(id);
     }
 }

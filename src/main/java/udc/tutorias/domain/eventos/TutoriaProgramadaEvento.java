@@ -1,11 +1,16 @@
 package udc.tutorias.domain.eventos;
 
-public class TutoriaProgramadaEvento {
-    private final Long tutoriaId;
+import java.time.LocalDateTime;
 
-    public TutoriaProgramadaEvento(Long tutoriaId) {
+public class TutoriaProgramadaEvento {
+    private final String tutoriaId;
+    private final LocalDateTime fechaHora;
+
+    public TutoriaProgramadaEvento(String tutoriaId, LocalDateTime fechaHora) {
         this.tutoriaId = tutoriaId;
+        this.fechaHora = fechaHora;
     }
 
-    public Long getTutoriaId() { return tutoriaId; }
+    public String getTutoriaId() { return tutoriaId; }
+    public LocalDateTime getFechaHora() { return fechaHora; }
 }

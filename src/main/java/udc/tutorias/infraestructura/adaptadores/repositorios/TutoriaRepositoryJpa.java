@@ -18,12 +18,12 @@ public class TutoriaRepositoryJpa implements TutoriaRepository {
     }
 
     @Override
-    public Optional<Tutoria> buscarPorId(Long id) {
+    public Optional<Tutoria> buscarPorId(String id) {
         return Optional.ofNullable(bdSimulada.get(id));
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(String id) {
         bdSimulada.remove(id);
     }
 }

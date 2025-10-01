@@ -1,11 +1,16 @@
 package udc.tutorias.domain.eventos;
 
-public class TutoriaCanceladaEvento {
-    private final Long tutoriaId;
+import java.time.LocalDateTime;
 
-    public TutoriaCanceladaEvento(Long tutoriaId) {
+public class TutoriaCanceladaEvento {
+    private final String tutoriaId;
+
+    public TutoriaCanceladaEvento(String tutoriaId) {
         this.tutoriaId = tutoriaId;
     }
 
-    public Long getTutoriaId() { return tutoriaId; }
+    public String getTutoriaId() {
+        return tutoriaId;
+    }
 }
+
