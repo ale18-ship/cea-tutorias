@@ -1,5 +1,6 @@
 package udc.tutorias.domain.model.vo;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -7,10 +8,14 @@ public class FechaHora {
     private final LocalDateTime fechaHora;
 
     public FechaHora(LocalDateTime fechaHora) {
+        this(fechaHora, Clock.systemDefaultZone());
+    }
+
+    public FechaHora(LocalDateTime fechaHora, Clock clock) {
         if (fechaHora == null) {
             throw new IllegalArgumentException("La fecha y hora no pueden ser nulas");
         }
-        if (fechaHora.isBefore(LocalDateTime.now())) {
+        if (fechaHora.isBefore(LocalDateTime.now(clock))) {
             throw new IllegalArgumentException("La tutoría no puede programarse en el pasado");
         }
         this.fechaHora = fechaHora;
@@ -38,3 +43,4 @@ public class FechaHora {
         return fechaHora.toString();
     }
 }
+

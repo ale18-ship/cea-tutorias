@@ -12,6 +12,10 @@ public class Lugar {
         this.nombre = nombre.trim();
     }
 
+    public static Lugar of(String nombre) {
+        return new Lugar(nombre);
+    }
+
     public String getNombre() {
         return nombre;
     }

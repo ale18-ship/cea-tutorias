@@ -1,6 +1,8 @@
 package udc.tutorias;
 
 import udc.tutorias.domain.model.*;
+import udc.tutorias.domain.model.vo.FechaHora;
+import udc.tutorias.domain.model.vo.Lugar;
 import udc.tutorias.infraestructura.adaptadores.repositorios.TutoriaRepositoryJpa;
 import udc.tutorias.infraestructura.adaptadores.controladores.TutoriaController;
 import udc.tutorias.infraestructura.adaptadores.notificaciones.EmailNotificacionAdapter;
@@ -18,21 +20,46 @@ public class Main {
         TutoriaController controller = new TutoriaController(
                 tutoria -> {
                     Tutoria guardada = tutoriaRepo.guardar(tutoria);
-                    notificacion.notificarTutoriaProgramada(
-                            new TutoriaProgramadaEvento(guardada.getId(), LocalDateTime.now()));
+
+                    TutoriaProgramadaEvento evento = new TutoriaProgramadaEvento(
+                            guardada.getId(),
+                            guardada.getEstudiante().getId(),
+                            guardada.getEstudiante().getNombre(),
+                            guardada.getDocente().getId(),
+                            guardada.getDocente().getNombre(),
+                            LocalDateTime.now()
+                    );
+
+                    notificacion.notificarTutoriaProgramada(evento);
+
                     return guardada;
                 },
                 id -> {
+                    Tutoria eliminada = tutoriaRepo.buscarPorId(id)
+                            .orElseThrow(() -> new RuntimeException("Tutoria no encontrada con id: " + id));
+
                     tutoriaRepo.eliminar(id);
-                    notificacion.notificarTutoriaCancelada(new TutoriaCanceladaEvento(id));
+
+                    TutoriaCanceladaEvento eventoCancelacion = new TutoriaCanceladaEvento(
+                            eliminada.getId(),
+                            eliminada.getEstudiante().getId(),
+                            eliminada.getDocente().getId(),
+                            eliminada.getFechaHora().getFechaHora()
+                    );
+
+                    notificacion.notificarTutoriaCancelada(eventoCancelacion);
                 }
         );
 
         Docente docente = new Docente("D1", "Juan Pérez");
-        Estudiante estudiante = new Estudiante("E1", "Ana López");
+        Carrera carrera = new Carrera("C1", "Ingeniería de Sistemas");
+        Estudiante estudiante = new Estudiante("E1", "Ana López", carrera);
         Asignatura asignatura = new Asignatura("A1", "Matemáticas");
 
-        Tutoria nuevaTutoria = new Tutoria("T1", docente, estudiante, List.of(asignatura));
+        FechaHora fechaHora = new FechaHora(LocalDateTime.of(2025, 10, 5, 10, 0));
+        Lugar lugar = new Lugar("Aula 101");
+
+        Tutoria nuevaTutoria = new Tutoria("T1", docente, estudiante, List.of(asignatura), fechaHora, lugar);
 
         controller.programarTutoria(nuevaTutoria);
 
