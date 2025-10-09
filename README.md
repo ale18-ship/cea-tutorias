@@ -9,54 +9,59 @@ La finalidad es mostrar cómo estructurar el dominio, la aplicación y la infrae
 ```
 src/main/java/udc/tutorias
 │
-├── domain                  # Capa de dominio (reglas de negocio)
-│   ├── eventos             # Eventos de dominio
+├── domain                        # Capa de dominio (reglas de negocio)
+│   ├── eventos                   # Eventos de dominio
 │   │   ├── TutoriaProgramadaEvento.java
 │   │   └── TutoriaCanceladaEvento.java
 │   │
-│   ├── excepciones         # Excepciones específicas
+│   ├── excepciones               # Excepciones personalizadas
 │   │   ├── DocenteNoDisponibleException.java
 │   │   ├── InvarianteDominioException.java
 │   │   └── TutoriaNoEncontradaException.java
 │   │
-│   ├── model               # Modelos de dominio
+│   ├── model                     # Entidades y objetos de valor
 │   │   ├── Asignatura.java
 │   │   ├── Carrera.java
 │   │   ├── Docente.java
 │   │   ├── Estudiante.java
 │   │   ├── Tutoria.java
-│   │   └── Universidad.java
+│   │   ├── Universidad.java
+│   │   │
+│   │   └── vo                    # Value Objects (atributos con reglas propias)
+│   │       ├── FechaHora.java
+│   │       └── Lugar.java
 │   │
-│   ├── servicios           # Servicios de dominio
-│   │   ├── DisponibilidadDocenteService.java
-│   │   ├── NotificacionService.java
-│   │   └── ValidacionHorarioService.java
+│   └── servicios                 # Servicios de dominio
+│       ├── DisponibilidadDocenteService.java
+│       ├── NotificacionService.java
+│       └── ValidacionHorarioService.java
 │
-├── application             # Capa de aplicación
-│   ├── puertos_entrada     # Interfaces que exponen casos de uso
+├── application                   # Capa de aplicación (casos de uso)
+│   ├── puertos_entrada
 │   │   ├── ServicioProgramarTutoria.java
 │   │   └── ServicioCancelarTutoria.java
 │   │
-│   └── puertos_salida      # Interfaces de repositorios
+│   └── puertos_salida
 │       ├── TutoriaRepository.java
 │       ├── DocenteRepository.java
 │       └── EstudianteRepository.java
 │
-├── infraestructura         # Capa de infraestructura
+├── infraestructura               # Capa de infraestructura (adaptadores)
 │   └── adaptadores
-│       ├── controladores   # Simulación de entrada (API)
-│       │   └── TutoriaController.java
+│       ├── controladores
+│       │   ├── TutoriaController.java
+│       │   └── DocenteController.java
 │       │
-│       ├── repositorios    # Implementación de puertos de salida
+│       ├── repositorios
 │       │   ├── TutoriaRepositoryJpa.java
 │       │   ├── DocenteRepositoryMongo.java
 │       │   └── EstudianteRepositoryPostgres.java
 │       │
-│       └── notificaciones  # Adaptadores de salida (notificación)
+│       └── notificaciones
 │           ├── EmailNotificacionAdapter.java
 │           └── SmsNotificacionAdapter.java
 │
-└── Main.java               # Clase de arranque para pruebas
+└── Main.java
 
 ```
 
